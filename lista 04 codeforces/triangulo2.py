@@ -6,15 +6,15 @@ elif ((a == b and a == c and c == b) or (a == b or a == c or b == c)):
 elif (a > b and a > c):
     if ((b ** 2 + c ** 2) == a ** 2):
         print("r")
-    else:
+    elif (b != c):
         print("o")
 elif (b > a and b > c):
     if ((a ** 2 + c ** 2) == b ** 2):
         print("r")
-    else:
+    elif (a != c):
         print("o")
 elif (c > a and c > b):
     if ((a ** 2 + b ** 2) == c ** 2):
         print("r")
-    else:
+    elif (a != b):
         print("o")

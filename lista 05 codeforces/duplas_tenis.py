@@ -31,6 +31,13 @@ elif (d1 > 0 and d3 > 0 and d5 > 0):
         print(d3)
     else:
         print(d5)
+elif (d1 > 0 and d5 > 0 and d6 > 0):
+    if (d1 <= d5 and d1 <= d6):
+        print(d1)
+    elif (d5 <= d6):
+        print(d5)
+    else:
+        print(d6)
 elif (d2 > 0 and d3 > 0 and d4 > 0):
     if (d2 <= d3 and d2 <= d4):
         print(d2)
@@ -38,6 +45,13 @@ elif (d2 > 0 and d3 > 0 and d4 > 0):
         print(d3)
     else:
         print(d4)
+elif (d2 > 0 and d4 > 0 and d6 > 0):
+    if (d2 <= d4 and d2 <= d6):
+        print(d2)
+    elif (d4 <= d6):
+        print(d4)
+    else:
+        print(d6)
 elif (d3 > 0 and d4 > 0 and d5 > 0):
     if (d3 <= d4 and d3 <= d5):
         print(d3)
@@ -45,6 +59,13 @@ elif (d3 > 0 and d4 > 0 and d5 > 0):
         print(d4)
     else:
         print(d5)
+elif (d4 > 0 and d5 > 0 and d6 > 0):
+    if (d4 <= d5 and d4 <= d6):
+        print(d4)
+    elif (d5 <= d6):
+        print(d5)
+    else:
+        print(d6)
 
 
 

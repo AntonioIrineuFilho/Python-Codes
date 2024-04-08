@@ -6,4 +6,7 @@ for a, b in range(len(x)):
         z.append(x[a])
     elif (x[b] == (y[a], y[a]) or x[b] == (y[b], y[b])):
         z.append(x[b])
-if ()
+if (len(z) == len(y)):
+    print('Simetrico')
+else:
+    print('Assimetrico')

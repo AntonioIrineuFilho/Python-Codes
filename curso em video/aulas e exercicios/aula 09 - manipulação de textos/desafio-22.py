@@ -1,0 +1,7 @@
+x = input('Digite seu nome completo: ')
+print('Maiusculo: {}'.format(x.upper()))
+print('Minusculo: {}'.format(x.lower()))
+letras = ''.join(x.split())
+print('Total de letras: {}'.format(len(letras.strip())))
+palavras = x.split()
+print('Quantidade de letras do primeiro nome: {}'.format(len(palavras[0])))

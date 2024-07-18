@@ -8,6 +8,6 @@ def binario(n):
     b = int(bin(n)[2:])
     return conta_bits(b)
 
-print(binario(25))
+print(binario(128564))
 
 

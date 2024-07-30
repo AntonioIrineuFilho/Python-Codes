@@ -10,7 +10,7 @@ for i in s:
 for (i, j) in p_cart:
     if (i % 2 == 0 and j % 2 == 0):
         paridade.append((i, j))
-    if (i % 2 != 0 and j % 2 == 0):
+    if (i % 2 != 0 and j % 2 != 0):
         paridade.append((i, j))
 
 print(paridade)

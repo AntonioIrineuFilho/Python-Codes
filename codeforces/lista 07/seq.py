@@ -11,7 +11,5 @@ for j in range(len(seq)):
     elif not (seq[j] == seq[j+1]):
         q = q + 1
 
-    
-
 print(q)
     

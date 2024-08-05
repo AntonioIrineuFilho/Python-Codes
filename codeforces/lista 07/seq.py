@@ -6,13 +6,12 @@ for i in range(0, n):
     seq.append(x)
 
 for j in range(len(seq)):
-    if (j == 0):
+    if (j == len(seq)-1):
         q = q + 1
-    elif (j == len(seq)-1):
-        q = q + 1
-    elif (seq[j-1] != seq[j+1]):
-        q = q + 0
-    else:
+    elif not (seq[j] == seq[j+1]):
         q = q + 1
 
+    
+
 print(q)
+    

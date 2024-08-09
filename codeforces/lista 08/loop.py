@@ -46,6 +46,8 @@ while True:
                     else:
                         x = max(mgn[i], mgn[i+1])
                     p = p + 1
+            if ((mgn[-1] > mgn[0] and mgn[-2] > mgn[-1]) or (mgn[-1] < mgn[0] and mgn[-2] < mgn[-1])):
+                p = p - 1
             ppt.append(p)
         else:
             p = 1
@@ -85,6 +87,8 @@ while True:
                     else:
                         x = min(mgn[i], mgn[i+1])
                     p = p + 1
+            if ((mgn[-1] > mgn[0] and mgn[-2] > mgn[-1]) or (mgn[-1] < mgn[0] and mgn[-2] < mgn[-1])):
+                p = p - 1
             ppt.append(p)
 
 for j in ppt:

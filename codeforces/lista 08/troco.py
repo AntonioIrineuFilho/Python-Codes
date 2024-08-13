@@ -6,7 +6,7 @@ for i in range(0, q):
     maior = 0
     for j in range(len(precos)):
         troco = valor_ini - ((valor_ini // precos[j]) * precos[j])
-        if (troco >= maior):
+        if (troco > maior):
             maior = troco
         if (j == len(precos)-1):
             max_trocos.append(maior)

@@ -5,8 +5,10 @@ for i in range(0, q):
     precos = list(map(float, input().split()))
     maior = 0
     for j in range(len(precos)):
-        troco = valor_ini - ((valor_ini // precos[j]) * precos[j])
-        if (troco > maior):
+        troco = valor_ini % precos[j]
+        if ((valor_ini // precos[j]) * precos[j] == 0):
+            troco = 0
+        if (troco >= maior):
             maior = troco
         if (j == len(precos)-1):
             max_trocos.append(maior)

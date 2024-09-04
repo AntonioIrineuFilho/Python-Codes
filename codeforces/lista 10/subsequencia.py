@@ -10,11 +10,8 @@ for i in range(len(seq2)):
                 l_indice[0].append(seq1[j])
                 l_indice[1].append(j)
                 break
-        if (seq2[i] not in seq1):
-            print('N')
-            quit()
 
-if (sorted(l_indice[1]) == l_indice[1]):
+if (sorted(l_indice[1]) == l_indice[1] and len(seq2) == len(l_indice[1])):
     print('S')
 else:
     print('N')

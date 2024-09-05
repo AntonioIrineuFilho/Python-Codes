@@ -1,0 +1,41 @@
+Resolução da tela: 640x480
+
+Cenário: City Background
+
+Criação dos retângulos(bombas): 
+
+1- Quantidade?
+
+2- Velocidade de queda?
+
+3- Colisão com o personagem
+
+4- Colisão com o chão
+
+Menus:
+
+Vai ter menu inicial?
+
+Tela de Game Over
+
+Pontuação e Recorde no canto superior direito
+
+Trilha sonora:
+
+Musica de fundo
+
+Chiado da bomba
+
+Coleta da bomba
+
+Explosão da bomba
+
+Sprite sheets:
+
+Bomba caindo
+
+Explosão da bomba
+
+Personagem correndo
+
+

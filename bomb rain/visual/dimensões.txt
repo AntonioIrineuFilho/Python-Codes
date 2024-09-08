@@ -1,0 +1,3 @@
+personagem = 96 x 96
+bombas = 32 x 32
+explosão = 32 x 32

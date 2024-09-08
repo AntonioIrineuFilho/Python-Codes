@@ -5,21 +5,26 @@ from random import randint
 
 pygame.init()
 
-largura = 640
-altura = 480
-x_bombas = [randint(40, 600), randint(40, 600), randint(40, 600), randint(40, 600)]
-y_bombas = [0, 0, 0, 0]
-x_personagem = 300
-y_personagem = 350
-tela = pygame.display.set_mode((largura, altura))
 pygame.display.set_caption('BOMB RAIN')
+tela = pygame.display.set_mode((640, 480))
 cenario = pygame.image.load('cenario.png').convert()
-fps = pygame.time.Clock()
+sprite_explosion = pygame.image.load('explosion.png').convert_alpha()
+sprite_personagem = pygame.image.load('personagem.png').convert_alpha()
+spr = sprite_personagem.get_rect(topleft=(300, 350))
+sprite_bomb = pygame.image.load('bomb.png').convert_alpha()
+sbrs = []
+for i in range(0, 6):
+    sbrs.append(sprite_bomb.get_rect(topleft=(randint(40, 600), 0)))
+x_sprite_bomb = 0
+y_sprite_bomb = 0
+x_sprite_personagem = 0
+y_sprite_personagem = 0
+
+
 
 while True:
-
-    bombas = []
-    fps.tick(30)
+    pygame.time.Clock().tick(30)
+    bomb_rects = []
     tela.blit(cenario, (0, 0))
 
     for event in pygame.event.get():
@@ -37,27 +42,39 @@ while True:
     if (pygame.key.get_pressed()[K_d]):
         x_personagem = x_personagem + 10
 
+    for i in range(0, 6):
+        tela.blit(sprite_bomb, sbrs[i], (int(x_sprite_bomb)*32, y_sprite_bomb, 32, 32))
+        bomb_rects.append(sbrs[i])
 
-    tela.blit(cenario, (0, 0))
+    tela.blit(sprite_personagem, spr, (int(x_sprite_personagem)*96, y_sprite_personagem+288, 96, 96))
 
-    ret1 = pygame.draw.rect(tela, (255, 255, 255), (x_bombas[0], y_bombas[0], 45, 48))
-    bombas.append(ret1)
-    ret2 = pygame.draw.rect(tela, (0, 255, 255), (x_bombas[1], y_bombas[1], 45, 48))
-    bombas.append(ret2)
-    ret3 = pygame.draw.rect(tela, (255, 255, 0), (x_bombas[2], y_bombas[2], 45, 48))
-    bombas.append(ret3)
-    ret4 = pygame.draw.rect(tela, (255, 0, 255), (x_bombas[3], y_bombas[3], 45, 48))
-    bombas.append(ret4)
-    personagem = pygame.draw.rect(tela, (0, 0, 0), (x_personagem, y_personagem, 45, 100))
+    x_sprite_personagem = x_sprite_personagem + 0.2
+    if (x_sprite_personagem >= 3):
+        x_sprite_personagem = 0
 
-    for i in range(len(bombas)):
-        if (bombas[i].colliderect(personagem)):
-            x_bombas[i] = randint(40, 600)
-            y_bombas[i] = -50
+    x_sprite_bomb = x_sprite_bomb + 0.25
+    if (x_sprite_bomb == 2):
+        x_sprite_bomb = 0
+
+    for j in range(len(bomb_rects)):
+        if (bomb_rects[j].colliderect(spr)):
+            bomb_rects[j].x = randint(40, 600)
+            bomb_rects[j].y = -50
         else:
-            if (y_bombas[i] >= altura-80):
-                y_bombas[i] = 0
+            if (bomb_rects[j].y >= 400):
+                x_sprite_explosion = 0
+                while x_sprite_explosion <= 20:
+                    x_sprite_explosion = x_sprite_explosion + 0.001
+                    tela.blit(sprite_explosion, (bomb_rects[j].x, bomb_rects[j].y), (int(x_sprite_explosion)*32, 0, 32, 32))
+                bomb_rects[j].y = -50
             else:
-                y_bombas[i] = y_bombas[i] + 1
+                if (j % 2 == 0):
+                    bomb_rects[j].y = bomb_rects[j].y + 0.4
+                if (bomb_rects[j].y > 250):
+                    bomb_rects[j].y = bomb_rects[j].y + 0.8
+                else:
+                    bomb_rects[j].y = bomb_rects[j].y + 1
+                    if (bomb_rects[j].y > 250):
+                        bomb_rects[j].y = bomb_rects[j].y + 0.3
 
     pygame.display.flip()

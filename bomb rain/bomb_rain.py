@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 from sys import exit
 from random import randint
+from time import sleep
 
 pygame.init()
 
@@ -14,12 +15,12 @@ spr = sprite_personagem.get_rect(topleft=(300, 350))
 sprite_bomb = pygame.image.load('bomb.png').convert_alpha()
 sbrs = []
 for i in range(0, 6):
-    sbrs.append(sprite_bomb.get_rect(topleft=(randint(40, 600), 0)))
+    sbrs.append(sprite_bomb.get_rect(topleft=(randint(40, 600), -20)))
 x_sprite_bomb = 0
 y_sprite_bomb = 0
 x_sprite_personagem = 0
 y_sprite_personagem = 0
-
+morte = False
 
 
 while True:
@@ -27,54 +28,65 @@ while True:
     bomb_rects = []
     tela.blit(cenario, (0, 0))
 
-    for event in pygame.event.get():
-        if (event.type == QUIT):
+    if (morte):
+        if (x_sprite_personagem >= 5):
+            sleep(10)
             pygame.quit()
             exit()
-        if (event.type == KEYDOWN):
-            if (event.key == K_a):
-                x_personagem = x_personagem - 10
-            if (event.key == K_d):
-                x_personagem = x_personagem + 10
+        x_sprite_personagem = x_sprite_personagem + 0.2
+        tela.blit(sprite_personagem, spr, (int(x_sprite_personagem)*96, 192, 96, 96))
+    else:
+        for event in pygame.event.get():
+            if (event.type == QUIT):
+                pygame.quit()
+                exit()
+        
+        tela.blit(sprite_personagem, spr, (int(x_sprite_personagem)*96, y_sprite_personagem, 96, 96))
 
-    if (pygame.key.get_pressed()[K_a]):
-        x_personagem = x_personagem - 10
-    if (pygame.key.get_pressed()[K_d]):
-        x_personagem = x_personagem + 10
 
-    for i in range(0, 6):
-        tela.blit(sprite_bomb, sbrs[i], (int(x_sprite_bomb)*32, y_sprite_bomb, 32, 32))
-        bomb_rects.append(sbrs[i])
-
-    tela.blit(sprite_personagem, spr, (int(x_sprite_personagem)*96, y_sprite_personagem+288, 96, 96))
-
-    x_sprite_personagem = x_sprite_personagem + 0.2
-    if (x_sprite_personagem >= 3):
-        x_sprite_personagem = 0
-
-    x_sprite_bomb = x_sprite_bomb + 0.25
-    if (x_sprite_bomb == 2):
-        x_sprite_bomb = 0
-
-    for j in range(len(bomb_rects)):
-        if (bomb_rects[j].colliderect(spr)):
-            bomb_rects[j].x = randint(40, 600)
-            bomb_rects[j].y = -50
+        if (pygame.key.get_pressed()[K_a]):
+            x_sprite_personagem = x_sprite_personagem + 0.25
+            y_sprite_personagem = 96
+            spr.x = spr.x - 7
+        elif (pygame.key.get_pressed()[K_d]):
+            x_sprite_personagem = x_sprite_personagem + 0.25
+            y_sprite_personagem = 0
+            spr.x = spr.x + 7
         else:
-            if (bomb_rects[j].y >= 400):
-                x_sprite_explosion = 0
-                while x_sprite_explosion <= 20:
-                    x_sprite_explosion = x_sprite_explosion + 0.001
-                    tela.blit(sprite_explosion, (bomb_rects[j].x, bomb_rects[j].y), (int(x_sprite_explosion)*32, 0, 32, 32))
-                bomb_rects[j].y = -50
+            x_sprite_personagem = x_sprite_personagem + 0.2
+            y_sprite_personagem = 288
+        
+        if (y_sprite_personagem == 288):
+            if (x_sprite_personagem >= 3):
+                x_sprite_personagem = 0
+        else:
+            if (x_sprite_personagem >= 5):
+                x_sprite_personagem = 0
+
+        for i in range(0, 6):
+            tela.blit(sprite_bomb, sbrs[i], (int(x_sprite_bomb)*32, y_sprite_bomb, 32, 32))
+            bomb_rects.append(sbrs[i])
+
+        x_sprite_bomb = x_sprite_bomb + 0.25
+        if (x_sprite_bomb == 2):
+            x_sprite_bomb = 0
+
+        for j in range(len(bomb_rects)):
+            if (bomb_rects[j].y >= spr.y and bomb_rects[j].x >= spr.x and bomb_rects[j].x <= (spr.x + 96)):
+                bomb_rects[j].x = randint(40, 600)
+                bomb_rects[j].y = -30
             else:
-                if (j % 2 == 0):
-                    bomb_rects[j].y = bomb_rects[j].y + 0.4
-                if (bomb_rects[j].y > 250):
-                    bomb_rects[j].y = bomb_rects[j].y + 0.8
+                if (bomb_rects[j].y >= 400):
+                    morte = True 
+                    x_sprite_explosion = 0
+                    while x_sprite_explosion <= 20:
+                        x_sprite_explosion = x_sprite_explosion + 0.001
+                        tela.blit(sprite_explosion, (bomb_rects[j].x, bomb_rects[j].y), (int(x_sprite_explosion)*32, 0, 32, 32))
                 else:
-                    bomb_rects[j].y = bomb_rects[j].y + 1
-                    if (bomb_rects[j].y > 250):
-                        bomb_rects[j].y = bomb_rects[j].y + 0.3
+                    if (bomb_rects[j].x <= 200 or bomb_rects[j].x >= 500):
+                        bomb_rects[j].y = bomb_rects[j].y + 1
+                    else:
+                        bomb_rects[j].y = bomb_rects[j].y + 1.5
+                
 
     pygame.display.flip()

@@ -7,6 +7,7 @@ from time import sleep
 pygame.init()
 
 pygame.display.set_caption('BOMB RAIN')
+fps = pygame.time.Clock()
 tela = pygame.display.set_mode((640, 480))
 cenario = pygame.image.load('cenario.png').convert()
 sprite_explosion = pygame.image.load('explosion.png').convert_alpha()
@@ -22,27 +23,27 @@ x_sprite_personagem = 0
 y_sprite_personagem = 0
 morte = False
 
-
 while True:
-    pygame.time.Clock().tick(30)
-    bomb_rects = []
+
     tela.blit(cenario, (0, 0))
+    fps.tick(30)
 
     if (morte):
         if (x_sprite_personagem >= 5):
             sleep(10)
             pygame.quit()
             exit()
-        x_sprite_personagem = x_sprite_personagem + 0.2
+        x_sprite_personagem = x_sprite_personagem + 0.15
         tela.blit(sprite_personagem, spr, (int(x_sprite_personagem)*96, 192, 96, 96))
     else:
+        bomb_rects = []
+
         for event in pygame.event.get():
             if (event.type == QUIT):
                 pygame.quit()
                 exit()
         
         tela.blit(sprite_personagem, spr, (int(x_sprite_personagem)*96, y_sprite_personagem, 96, 96))
-
 
         if (pygame.key.get_pressed()[K_a]):
             x_sprite_personagem = x_sprite_personagem + 0.25

@@ -24,7 +24,9 @@ Trilha sonora:
 
 Musica de fundo
 
-Chiado da bomba
+Tela inicial
+
+Tela de game over
 
 Coleta da bomba
 

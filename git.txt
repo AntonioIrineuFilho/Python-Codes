@@ -1,0 +1,8 @@
+git init -> inicia o git
+git remote add origin https://github.com/antchan2911/repositorio.git -> especifica o repositorio que eu quero subir os arquivos
+git branch -M main -> especifica o branch que os arquivos vão
+git add . -> adiciona tudo
+git add nome.ext -> adiciona um arquivo especifico
+git commit -m "mensagem -> comita
+git push origin main -> sobe pro repositorio
+git status -> mostra no terminal o estado das modificações(se tem arquivo com modificações pra subir ou não)

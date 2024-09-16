@@ -7,3 +7,5 @@ git add nome.ext -> adiciona um arquivo especifico
 git commit -m "mensagem -> comita
 git push origin main -> sobe pro repositorio
 git status -> mostra no terminal o estado das modificações(se tem arquivo com modificações pra subir ou não)
+
+winget install --id Git.Git -e --source winget -> tacar no terminal para baixar o git

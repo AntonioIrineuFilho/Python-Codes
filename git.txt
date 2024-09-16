@@ -1,4 +1,5 @@
 git init -> inicia o git
+git clone https://github.com/antchan2911/repositorio.git -> clona o repositorio pra dentro da pasta do VS Code
 git remote add origin https://github.com/antchan2911/repositorio.git -> especifica o repositorio que eu quero subir os arquivos
 git branch -M main -> especifica o branch que os arquivos vão
 git add . -> adiciona tudo

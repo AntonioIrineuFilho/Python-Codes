@@ -25,7 +25,8 @@ spr = sprite_personagem.get_rect(topleft=(300, 350))
 sprite_bomb = pygame.image.load('bomb.png').convert_alpha()
 sbrs = []
 for i in range(0, 6):
-    sbrs.append(sprite_bomb.get_rect(topleft=(randint(40, 600), -20)))
+    sbrs.append(sprite_bomb.get_rect(topleft=(randint(40, 600), -50)))
+vel_bombs = [randint(2, 6), randint(2, 6), randint(2, 6), randint(2, 6), randint(2, 6), randint(2, 6)]
 x_sprite_bomb = 0
 y_sprite_bomb = 0
 x_sprite_personagem = 0
@@ -52,8 +53,8 @@ while True:
                 inicial = False
     elif (gameover):
         cont = 1
-        pontuacao = pygame.font.SysFont('Yoster Island Regular', 20, False, False).render(f'{max(recordes)}', False, (255, 255, 255))
-        recorde = pygame.font.SysFont('Yoster Island Regular', 20, False, False).render(f'{somador_pontos}', False, (255, 255, 255))
+        pontuacao = pygame.font.SysFont('Yoster Island Regular', 30, False, False).render(f'{max(recordes)}', False, (255, 255, 255))
+        recorde = pygame.font.SysFont('Yoster Island Regular', 30, False, False).render(f'{somador_pontos}', False, (255, 255, 255))
         tela.blit(game_over, (0, 0))
         tela.blit(pontuacao, (435, 170))
         tela.blit(recorde, (435, 219))
@@ -64,6 +65,7 @@ while True:
             if (event.type == KEYDOWN and event.key == K_SPACE):
                 gameover = False
                 somador_pontos = 0
+                vel_bombs = [randint(2, 6), randint(2, 6), randint(2, 6), randint(2, 6), randint(2, 6), randint(2, 6)]
     elif (morte):
         if (cont == 1):
             for k in range(len(bomb_rects)):
@@ -139,11 +141,7 @@ while True:
                                 x_sprite_explosion = x_sprite_explosion + 0.001
                                 tela.blit(sprite_explosion, (bomb_rects[k].x, bomb_rects[k].y), (int(x_sprite_explosion)*32, 0, 32, 32))
                     morte = True
-                    
                 else:
-                    if (bomb_rects[j].x <= 200 or bomb_rects[j].x >= 500):
-                        bomb_rects[j].y = bomb_rects[j].y + 1
-                    else:
-                        bomb_rects[j].y = bomb_rects[j].y + 1.5
+                    bomb_rects[j].y = bomb_rects[j].y + vel_bombs[j]/2
                 
     pygame.display.flip()

@@ -12,8 +12,8 @@ git clone https://github.com/antchan2911/repositorio.git -> clona o repositorio 
 git pull -> traz do repositorio apenas o que estiver desatualizado na pasta clonada 
 git add . -> adiciona tudo
 git add nome.ext -> adiciona um arquivo especifico
-git commit -m "mensagem" -> comita
-git push origin main -> sobe pro repositorio
+git commit -m "mensagem" -> confirma a modificação do arquivo
+git push origin main -> sobe a modificação pro repositorio
 git fetch origin -> verifica se o repositorio local está sincronizado com o repositorio da nuvem(usar antes do git status)
 git status -> mostra no terminal o estado das modificações(se tem arquivo com modificações pra subir ou não)
 

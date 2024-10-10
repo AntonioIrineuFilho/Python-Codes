@@ -1,8 +1,15 @@
+winget install --id Git.Git -e --source winget -> tacar no terminal para baixar o git
+
 git init -> inicia o git
-git clone https://github.com/antchan2911/repositorio.git -> clona o repositorio pra dentro da pasta do VS Code
-git pull -> traz do repositorio apenas o que estiver desatualizado na pasta clonada 
 git remote add origin https://github.com/antchan2911/repositorio.git -> especifica o repositorio que eu quero subir os arquivos
 git branch -M main -> especifica o branch que os arquivos vão
+
+// mais importantes //
+
+cd pasta -> entra na pasta especificada
+dir -> verifica qual a pasta atual
+git clone https://github.com/antchan2911/repositorio.git -> clona o repositorio pra dentro da pasta do VS Code
+git pull -> traz do repositorio apenas o que estiver desatualizado na pasta clonada 
 git add . -> adiciona tudo
 git add nome.ext -> adiciona um arquivo especifico
 git commit -m "mensagem" -> comita
@@ -10,4 +17,3 @@ git push origin main -> sobe pro repositorio
 git fetch origin -> verifica se o repositorio local está sincronizado com o repositorio da nuvem(usar antes do git status)
 git status -> mostra no terminal o estado das modificações(se tem arquivo com modificações pra subir ou não)
 
-winget install --id Git.Git -e --source winget -> tacar no terminal para baixar o git

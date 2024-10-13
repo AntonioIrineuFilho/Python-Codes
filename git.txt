@@ -7,6 +7,7 @@ git branch -M main -> especifica o branch que os arquivos vão
 // mais importantes //
 
 cd pasta -> entra na pasta especificada
+cd .. -> volta para a pasta/diretorio anterior
 dir -> verifica qual a pasta atual
 git clone https://github.com/antchan2911/repositorio.git -> clona o repositorio pra dentro da pasta do VS Code
 git pull -> traz do repositorio apenas o que estiver desatualizado na pasta clonada 

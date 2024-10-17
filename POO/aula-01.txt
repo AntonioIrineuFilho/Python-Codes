@@ -1,0 +1,24 @@
+Atributos -> dados(saldo, nome, conta)
+
+Métodos -> funções(debitar, depositar)
+
+Objeto / Entidade -> aquilo do mundo real que eu quero representar computacionalmente
+
+Classes -> agrupamento de atributos e métodos
+
+Abstração -> identificação do que é importante para representar o objeto da classe
+
+Em Python:
+
+class clienteDoBanco:
+	def __init__(self):  # método construtor 
+		self.nome = ''   # atributo1
+		self.saldo = 0   # atributo2
+
+	def depositar(self, acrescimo):
+		self.saldo += acrescimo
+
+Todos os atributos devem ser declarados no método construtor	
+	
+Todo método da classe recebe self como parâmetro, pois cada objeto vai ser identificado com 
+seus atributos(self = próprios)	

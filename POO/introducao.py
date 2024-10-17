@@ -6,5 +6,8 @@ class Triangulo:
         area = self.b * self.h / 2
         return area
 
-triangulo1 = Triangulo()
-print(triangulo1)
+triangulo = Triangulo()
+
+triangulo.b = int(input())
+triangulo.h = int(input())
+print(triangulo.calcArea())

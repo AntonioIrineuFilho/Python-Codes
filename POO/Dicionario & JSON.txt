@@ -1,0 +1,47 @@
+Dicionário -> Chave e Valor
+
+d = dict()
+d = {}
+d = {"RN": "Natal, "SP": "São Paulo"}
+
+d["RN"] = "Mossoró" -> Substitui o valor da chave existente
+
+d["AM"] = "Manaus" -> Se a chave não existir, ela é criada
+
+As chaves/keys não podem ser alteradas, apenas criadas e deletadas
+
+for item in d.items: -> Retorna o conjunto(chave + valor)
+
+for value in x.values: -> Retorna cada valor
+
+for key in x.keys: -> Retorna cada chave
+
+Dicionário em POO -> Utiliza-se a função vars(objeto) ou objeto.__dict__ para 
+agrupar os atributos e os valores daquele objeto em forma de dicionário
+
+Isso vai ser utilizado para gravar os dados da classe e dos objetos de forma organizada em um 
+arquivo externo utilizando JSON
+
+import json
+
+lista_de_obetos = [a, b]
+
+with open("arquivo.json", mode="w / r") as arquivo:
+	json.dump(lista_com_objetos, arquivo, default = vars)
+
+with open -> abre o arquivo externo e fecha apos encerrar o programa
+
+mode -> como o arquivo deve ser manipulado: w = write, escrever no arquivo / r = read, ler o arquivo
+
+dump -> subir / salvar os dados no arquivo
+
+load -> carregar os arquivos
+
+
+lista_de_obetos = [a, b]
+
+with open("arquivo.json", mode = "r") as arquivo:
+	dados = json.load(arquivo)
+	for objeto in dados:
+		obj = Classe(objeto["atributo1"], objeto["atributo2"])
+		lista_de_objetos.append(obj)

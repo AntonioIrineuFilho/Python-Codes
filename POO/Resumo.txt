@@ -22,3 +22,13 @@ Todos os atributos devem ser declarados no método construtor
 	
 Todo método da classe recebe self como parâmetro, pois cada objeto vai ser identificado com 
 seus atributos(self = próprios)	
+
+@classmethod ->  quando a classe tiver um atributo de classe
+
+Ex: classe Clientes que realiza um CRUD para cada cliente, ela vai ter um atributo de lista
+
+@staticmethod -> quando a classe não possui atributos
+
+Ex: classe UI para chaamr os métodos demandados pelo usuário
+
+cls / self -> cls usa-se para atributo de classe / self usa-se para objetos

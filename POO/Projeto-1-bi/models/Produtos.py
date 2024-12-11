@@ -77,7 +77,8 @@ class Produtos:
                 cls.produtos[i].setEstoque(produto.getEstoque())
                 cls.produtos[i].setIdCategoria(produto.getIdCategoria())
             if (i == len(cls.produtos)-1):
-                return "Produto não encontrado."
+                print("Produto não encontrado.")
+                return
         cls.salvar()
     
     @classmethod
@@ -87,7 +88,8 @@ class Produtos:
             if (cls.produtos[i].getId() == id):
                 cls.produtos.remove(cls.produtos[i])
             if (i == len(cls.produtos)-1):
-                return "Produto não encontrado."
+                print("Produto não encontrado.")
+                return
         cls.salvar()
 
     @classmethod

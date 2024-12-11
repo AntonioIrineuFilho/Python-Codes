@@ -48,7 +48,8 @@ class Categorias:
             if (cls.categorias[i].getId() == categoria.getId()):
                 cls.categorias[i].setDescricao(categoria.getDescricao)
             if (i == len(cls.categoria)-1):
-                return "Categoria não encontrada."
+                print("Categoria não encontrada.")
+                return
         cls.salvar()
 
     @classmethod
@@ -57,6 +58,9 @@ class Categorias:
         for i in range(len(cls.categorias)):
             if (cls.categoria[i].getId() == id):
                 cls.categorias.remove(cls.categoria[i])
+            if (i == len(cls.categoria)-1):
+                print("Categoria não encontrada.")
+                return
         cls.salvar()
 
     @classmethod

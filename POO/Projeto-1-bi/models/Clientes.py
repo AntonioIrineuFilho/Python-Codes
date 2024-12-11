@@ -75,7 +75,8 @@ class Clientes:
                 cls.clientes[i].setSenha(cliente.getSenha)
                 break
             if (i == len(cls.clientes) - 1):
-                return "Cliente não encontrado."
+                print("Cliente não encontrado.")
+                return
         cls.salvar()
     
     @classmethod
@@ -86,7 +87,8 @@ class Clientes:
                 cls.clientes.remove(cls.clientes[i])
                 break
             if (i == len(cls.clientes)-1):
-                return "Cliente não encontrado."
+                print("Cliente não encontrado.")
+                return
         cls.salvar()
 
     @classmethod

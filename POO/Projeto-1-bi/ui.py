@@ -43,7 +43,7 @@ class UI:
     
     @classmethod
     def listarClientes():
-        clientes = View.listarClientes
+        clientes = View.listarClientes()
         if (len(clientes) == 0):
             print("Nenhum cliente cadastrado.")
         else:

@@ -86,7 +86,7 @@ class Produtos:
         cls.abrir()
         for i in range(len(cls.produtos)):
             if (cls.produtos[i].getId() == id):
-                cls.produtos.remove(cls.produtos[i])
+                del(cls.produtos[i])
             if (i == len(cls.produtos)-1):
                 print("Produto não encontrado.")
                 return
@@ -99,7 +99,7 @@ class Produtos:
             with open("produtos.json", mode="r") as arquivo:
                 objetos = json.load(arquivo)
             for obj in objetos:
-                p = Produto(obj["id"], obj["descricao"], obj["preco"], obj["estoque"], obj["idCategoria"])
+                p = Produto(obj["_Produto__id"], obj["_Produto__descricao"], obj["_Produto__preco"], obj["_Produto__estoque"], obj["_Produto__idCategoria"])
                 cls.produtos.append(p)
         except FileNotFoundError:
             pass

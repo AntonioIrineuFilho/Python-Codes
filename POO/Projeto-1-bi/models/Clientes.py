@@ -69,10 +69,10 @@ class Clientes:
         cls.abrir()
         for i in range(len(cls.clientes)):
             if (cls.clientes[i].getId() == cliente.getId()):
-                cls.clientes[i].setNome(cliente.getNome)
-                cls.clientes[i].setFone(cliente.getFone)
-                cls.clientes[i].setEmail(cliente.getEmail)
-                cls.clientes[i].setSenha(cliente.getSenha)
+                cls.clientes[i].setNome(cliente.getNome())
+                cls.clientes[i].setFone(cliente.getFone())
+                cls.clientes[i].setEmail(cliente.getEmail())
+                cls.clientes[i].setSenha(cliente.getSenha())
                 break
             if (i == len(cls.clientes) - 1):
                 print("Cliente não encontrado.")
@@ -83,8 +83,8 @@ class Clientes:
     def deletarCliente(cls, id):
         cls.abrir()
         for i in range(len(cls.clientes)):
-            if (cls.clientes[i].getId == id):
-                cls.clientes.remove(cls.clientes[i])
+            if (cls.clientes[i].getId() == id):
+                del(cls.clientes[i])
                 break
             if (i == len(cls.clientes)-1):
                 print("Cliente não encontrado.")

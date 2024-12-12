@@ -46,7 +46,7 @@ class Categorias:
         cls.abrir()
         for i in range(len(cls.categorias)):
             if (cls.categorias[i].getId() == categoria.getId()):
-                cls.categorias[i].setDescricao(categoria.getDescricao)
+                cls.categorias[i].setDescricao(categoria.getDescricao())
             if (i == len(cls.categoria)-1):
                 print("Categoria não encontrada.")
                 return
@@ -57,7 +57,7 @@ class Categorias:
         cls.abrir()
         for i in range(len(cls.categorias)):
             if (cls.categoria[i].getId() == id):
-                cls.categorias.remove(cls.categoria[i])
+                del(cls.categoria[i])
             if (i == len(cls.categoria)-1):
                 print("Categoria não encontrada.")
                 return
@@ -70,7 +70,7 @@ class Categorias:
             with open("categorias.json", mode="r") as arquivo:
                 objetos = json.load(arquivo)
             for obj in objetos:
-                c = Categoria(obj["id"], obj["descricao"])
+                c = Categoria(obj["_Categoria__id"], obj["_Categoria__descricao"])
                 cls.categorias.append(c)
         except FileNotFoundError:
             pass

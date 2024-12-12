@@ -95,11 +95,16 @@ class Produtos:
     @classmethod
     def abrir(cls):
         cls.produtos = []
-        with open("produtos.json", mode="r") as arquivo:
-            objetos = json.load(arquivo)
-        for obj in objetos:
-            p = Produto(obj["id"], obj["descricao"], obj["preco"], obj["estoque"], obj["idCategoria"])
-            cls.produtos.append(p)
+        try:
+            with open("produtos.json", mode="r") as arquivo:
+                objetos = json.load(arquivo)
+            for obj in objetos:
+                p = Produto(obj["id"], obj["descricao"], obj["preco"], obj["estoque"], obj["idCategoria"])
+                cls.produtos.append(p)
+        except FileNotFoundError:
+            pass
+        except json.JSONDecodeError:
+            pass
 
     @classmethod
     def salvar(cls):

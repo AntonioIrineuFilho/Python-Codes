@@ -102,8 +102,10 @@ class Clientes:
         try:
             with open("json/clientes.json", mode="r") as arquivo:
                 objetos = json.load(arquivo)
-                for obj in objetos:
-                    c = Cliente(obj["_Cliente__id"], obj["_Cliente__nome"], obj["_Cliente__fone"], obj["_Cliente__email"], obj["_Cliente__senha"])
-                    cls.clientes.append(c)
+            for obj in objetos:
+                c = Cliente(obj["_Cliente__id"], obj["_Cliente__nome"], obj["_Cliente__fone"], obj["_Cliente__email"], obj["_Cliente__senha"])
+                cls.clientes.append(c)
         except FileNotFoundError:
+            pass
+        except json.JSONDecodeError:
             pass

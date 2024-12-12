@@ -3,6 +3,7 @@ from models.Categorias import Categoria, Categorias
 from models.Produtos import Produto, Produtos
 
 class View:
+
     @staticmethod
     def validarClienteId(id):
         Clientes.abrir()

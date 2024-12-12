@@ -66,11 +66,16 @@ class Categorias:
     @classmethod
     def abrir(cls):
         cls.categorias = []
-        with open("categorias.json", mode="r") as arquivo:
-            objetos = json.load(arquivo)
-        for obj in objetos:
-            c = Categoria(obj["id"], obj["descricao"])
-            cls.categorias.append(c)
+        try:
+            with open("categorias.json", mode="r") as arquivo:
+                objetos = json.load(arquivo)
+            for obj in objetos:
+                c = Categoria(obj["id"], obj["descricao"])
+                cls.categorias.append(c)
+        except FileNotFoundError:
+            pass
+        except json.JSONDecodeError:
+            pass
 
     @classmethod
     def salvar(cls):

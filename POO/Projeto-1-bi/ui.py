@@ -123,6 +123,7 @@ class UI:
         preco = float("Digite o preço do produto: ")
         estoque = int(input("Digite a quantidade em estoque: "))
         idCategoria = int(input("Digite o ID da categoria do produto: "))
+        View.inserirProduto(0, desc, preco, estoque, idCategoria)
     
     @classmethod
     def listarProdutos(cls):

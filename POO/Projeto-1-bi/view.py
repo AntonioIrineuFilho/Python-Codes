@@ -16,7 +16,7 @@ class View:
     @staticmethod
     def validarCategoriaId(id):
         Categorias.abrir()
-        categorias = Categoria.categorias
+        categorias = Categorias.categorias
         for c in categorias:
             if (c.getId() == id):
                 return True
@@ -74,13 +74,13 @@ class View:
     
     @staticmethod
     def listarProdutos():
-        return Categorias.listarCategorias()
+        return Produtos.listarProdutos()
     
     @staticmethod
     def atualizarProduto(id, desc, preco, estoque, idCategoria):
         p = Produto(id, desc, preco, estoque, idCategoria)
-        Categorias.atualizarCategoria(p)
+        Produtos.atualizarProduto(p)
     
     @staticmethod
     def deletarProduto(id):
-        Categorias.deletarCategoria(id)
+        Produtos.deletarProduto(id)

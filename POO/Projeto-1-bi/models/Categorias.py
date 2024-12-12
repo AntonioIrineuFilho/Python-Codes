@@ -3,7 +3,7 @@ import json
 class Categoria:
     def __init__(self, id, descricao):
         self.setId(id)
-        self.setDescricao
+        self.setDescricao(descricao)
     def setId(self, id):
         if (id < 0):
             raise ValueError("INVALID ID")
@@ -35,6 +35,7 @@ class Categorias:
         categoria.setId(id+1)
         cls.categorias.append(categoria)
         cls.salvar()
+        print(categoria)
 
     @classmethod
     def listarCategorias(cls):
@@ -47,7 +48,8 @@ class Categorias:
         for i in range(len(cls.categorias)):
             if (cls.categorias[i].getId() == categoria.getId()):
                 cls.categorias[i].setDescricao(categoria.getDescricao())
-            if (i == len(cls.categoria)-1):
+                break
+            if (i == len(cls.categorias)-1):
                 print("Categoria não encontrada.")
                 return
         cls.salvar()
@@ -56,9 +58,10 @@ class Categorias:
     def deletarCategoria(cls, id):
         cls.abrir()
         for i in range(len(cls.categorias)):
-            if (cls.categoria[i].getId() == id):
-                del(cls.categoria[i])
-            if (i == len(cls.categoria)-1):
+            if (cls.categorias[i].getId() == id):
+                del(cls.categorias[i])
+                break
+            if (i == len(cls.categorias)-1):
                 print("Categoria não encontrada.")
                 return
         cls.salvar()
@@ -67,7 +70,7 @@ class Categorias:
     def abrir(cls):
         cls.categorias = []
         try:
-            with open("categorias.json", mode="r") as arquivo:
+            with open("json/categorias.json", mode="r") as arquivo:
                 objetos = json.load(arquivo)
             for obj in objetos:
                 c = Categoria(obj["_Categoria__id"], obj["_Categoria__descricao"])
@@ -79,5 +82,5 @@ class Categorias:
 
     @classmethod
     def salvar(cls):
-        with open("categorias.json", mode="w") as arquivo:
+        with open("json/categorias.json", mode="w") as arquivo:
             json.dump(cls.categorias, arquivo, default=vars)

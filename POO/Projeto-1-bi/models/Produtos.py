@@ -29,6 +29,7 @@ class Produto:
         else:
             self.__estoque = estoque
     def setIdCategoria(self, idCategoria):
+        Categorias.abrir()
         for i in range(len(Categorias.categorias)):
             if (Categorias.categorias[i].getId() == idCategoria):
                 self.__idCategoria = idCategoria
@@ -46,7 +47,7 @@ class Produto:
     def getIdCategoria(self):
         return self.__idCategoria
     def __str__(self):
-        return f'{self.getId()} - {self.getDescricao()} - {self.getPreco():.2f} - {self.getEstoque()} - {self.getIdCategoria()}(Categoria)'
+        return f'{self.getId()} - {self.getDescricao()} - R$ {self.getPreco():.2f} - {self.getEstoque()} - {self.getIdCategoria()}(Categoria)'
     
 class Produtos:
     produtos = []
@@ -59,6 +60,7 @@ class Produtos:
             if (obj.getId() > id):
                 id = obj.getId()
         produto.setId(id+1)
+        produto.setIdCategoria(produto.getIdCategoria())
         cls.produtos.append(produto)
         cls.salvar()
     
@@ -76,6 +78,7 @@ class Produtos:
                 cls.produtos[i].setPreco(produto.getPreco())
                 cls.produtos[i].setEstoque(produto.getEstoque())
                 cls.produtos[i].setIdCategoria(produto.getIdCategoria())
+                break
             if (i == len(cls.produtos)-1):
                 print("Produto não encontrado.")
                 return
@@ -87,6 +90,7 @@ class Produtos:
         for i in range(len(cls.produtos)):
             if (cls.produtos[i].getId() == id):
                 del(cls.produtos[i])
+                break
             if (i == len(cls.produtos)-1):
                 print("Produto não encontrado.")
                 return
@@ -96,7 +100,7 @@ class Produtos:
     def abrir(cls):
         cls.produtos = []
         try:
-            with open("produtos.json", mode="r") as arquivo:
+            with open("json/produtos.json", mode="r") as arquivo:
                 objetos = json.load(arquivo)
             for obj in objetos:
                 p = Produto(obj["_Produto__id"], obj["_Produto__descricao"], obj["_Produto__preco"], obj["_Produto__estoque"], obj["_Produto__idCategoria"])
@@ -108,7 +112,7 @@ class Produtos:
 
     @classmethod
     def salvar(cls):
-        with open("produtos.json", mode="w") as arquivo:
-            json.dump("produtos.json", arquivo, default=vars)
+        with open("json/produtos.json", mode="w") as arquivo:
+            json.dump(cls.produtos, arquivo, default=vars)
 
     

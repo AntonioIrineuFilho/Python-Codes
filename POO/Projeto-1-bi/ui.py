@@ -119,8 +119,8 @@ class UI:
     
     @classmethod
     def inserirProduto(cls):
-        desc = input("Digite a descrição do produto")
-        preco = float("Digite o preço do produto: ")
+        desc = input("Digite a descrição do produto: ")
+        preco = float(input("Digite o preço do produto: "))
         estoque = int(input("Digite a quantidade em estoque: "))
         idCategoria = int(input("Digite o ID da categoria do produto: "))
         View.inserirProduto(0, desc, preco, estoque, idCategoria)
@@ -143,8 +143,8 @@ class UI:
         if not (View.validarProdutoId(id)):
             print("Produto não encontrado.")
         else:
-            desc = input("Digite a descrição do produto")
-            preco = float("Digite o preço do produto: ")
+            desc = input("Digite a descrição do produto: ")
+            preco = float(input("Digite o preço do produto: "))
             estoque = int(input("Digite a quantidade em estoque: "))
             idCategoria = int(input("Digite o ID da categoria do produto: "))
             View.atualizarProduto(id, desc, preco, estoque, idCategoria)
@@ -154,7 +154,7 @@ class UI:
         produtos = View.listarProdutos()
         if (len(produtos) == 0):
             print("Nenhum produto cadastrado.")
-        id = int(input("Digite o ID do produto que deseja atualizar: "))
+        id = int(input("Digite o ID do produto que deseja deletar: "))
         if not (View.validarProdutoId(id)):
             print("Produto não encontrado.")
         else: 

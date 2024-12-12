@@ -34,7 +34,7 @@ class UI:
                 case _: print("Opção inválida")
     
     @classmethod
-    def inserirCliente():
+    def inserirCliente(cls):
         desc = input("Digite o nome do cliente: ")
         fone = input("Digite o número de telefone: ")
         email = input("Digite o e-mail do cliente: ")
@@ -42,7 +42,7 @@ class UI:
         View.inserirCliente(0, desc, fone, email, senha)
     
     @classmethod
-    def listarClientes():
+    def listarClientes(cls):
         clientes = View.listarClientes()
         if (len(clientes) == 0):
             print("Nenhum cliente cadastrado.")
@@ -51,7 +51,7 @@ class UI:
                 print(cliente)
     
     @classmethod
-    def atualizarCliente():
+    def atualizarCliente(cls):
         clientes = View.listarClientes()
         if (len == clientes):
             print("Nenhum cliente cadastrado.")
@@ -67,7 +67,7 @@ class UI:
             View.atualizarCliente(id, desc, fone, email, senha)
 
     @classmethod
-    def deletarCliente():
+    def deletarCliente(cls):
         clientes = View.listarClientes()
         if (len == clientes):
             print("Nenhum cliente cadastrado.")
@@ -79,12 +79,12 @@ class UI:
             View.deletarCliente(id)
 
     @classmethod
-    def inserirCategoria():
+    def inserirCategoria(cls):
         desc = input("Digite a descrição da categoria: ")
         View.inserirCategoria(0, desc)
 
     @classmethod
-    def listarCategorias():
+    def listarCategorias(cls):
         categorias = View.listarCategorias()
         if (len(categorias) == 0):
             print("Nenhuma categoria cadastrada.")
@@ -93,7 +93,7 @@ class UI:
                 print(categoria)
     
     @classmethod
-    def atualizarCategoria():
+    def atualizarCategoria(cls):
         categorias = View.listarCategorias()
         if (len(categorias) == 0):
             print("Nenhuma categoria cadastrada.")
@@ -105,7 +105,8 @@ class UI:
             desc = input("Digite a descrição da categoria: ")
             View.atualizarCategoria(id, desc)
 
-    def deletarCategoria():
+    @classmethod
+    def deletarCategoria(cls):
         categorias = View.listarCategorias()
         if (len(categorias) == 0):
             print("Nenhuma categoria cadastrada.")
@@ -117,14 +118,14 @@ class UI:
             View.deletarCategoria(id)
     
     @classmethod
-    def inserirProduto():
+    def inserirProduto(cls):
         desc = input("Digite a descrição do produto")
         preco = float("Digite o preço do produto: ")
         estoque = int(input("Digite a quantidade em estoque: "))
         idCategoria = int(input("Digite o ID da categoria do produto: "))
     
     @classmethod
-    def listarProdutos():
+    def listarProdutos(cls):
         produtos = View.listarProdutos()
         if (len(produtos) == 0):
             print("Nenhum produto cadastrado.")
@@ -133,7 +134,7 @@ class UI:
                 print(produto)
     
     @classmethod
-    def atualizarProduto():
+    def atualizarProduto(cls):
         produtos = View.listarProdutos()
         if (len(produtos) == 0):
             print("Nenhum produto cadastrado.")
@@ -148,7 +149,7 @@ class UI:
             View.atualizarProduto(id, desc, preco, estoque, idCategoria)
     
     @classmethod
-    def deletarProduto():
+    def deletarProduto(cls):
         produtos = View.listarProdutos()
         if (len(produtos) == 0):
             print("Nenhum produto cadastrado.")

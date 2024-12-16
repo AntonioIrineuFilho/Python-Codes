@@ -1,11 +1,23 @@
 from view import View
 
 class UI:
+
+    idClienteSessao = -1
+
     @staticmethod
-    def menu():
-        print(15*"-")
+    def menuVisitante():
+        print(20*"-")
+        print("MENU DO VISITANTE")
+        print(20*"-")
+        print("1-Cadastro no Sistema\n2-Entrar no Sistema")
+        op = int(input("Digite a opção desejada: "))
+        return op
+    
+    @staticmethod
+    def menuAdmin():
+        print(20*"-")
         print("MENU DO ADMIN")
-        print(15*"-")
+        print(20*"-")
         print("1-Inserir Cliente\n2-Listar Clientes\n3-Atualizar Cliente\n4-Deletar Cliente\n")
         print("5-Inserir Categoria\n6-Listar Categorias\n7-Atualizar Categoria\n8-Deletar Categoria\n")
         print("9-Inserir Produto\n10-Listar Produtos\n11-Atualizar Produtos\n12-Deletar Produtos\n")
@@ -13,26 +25,90 @@ class UI:
         op = int(input("Digite a opção desejada: "))
         return op
     
-    @staticmethod
-    def main():
-        run = True
-        while (run):
-            match(UI.menu()):
-                case 1: UI.inserirCliente()
-                case 2: UI.listarClientes()
-                case 3: UI.atualizarCliente()
-                case 4: UI.deletarCliente()
-                case 5: UI.inserirCategoria()
-                case 6: UI.listarCategorias()
-                case 7: UI.atualizarCategoria()
-                case 8: UI.deletarCategoria()
-                case 9: UI.inserirProduto()
-                case 10: UI.listarProdutos()
-                case 11: UI.atualizarProduto()
-                case 12: UI.deletarProduto()
-                case 13: run = False
-                case _: print("Opção inválida")
-    
+    @staticmethod 
+    def menuCliente():
+        print(20*"-")
+        print("MENU DO CLIENTE")
+        print(20*"-")
+        print("1-Ver Categorias\n2-Ver Produtos\n3-Inserir Produto no Carrinho\n4-Ver Carrinho\n5-Atualizar Produto\n6-Remover Produto\n")
+        op = int(input("Digite a opção desejada: "))
+        return op
+
+    @classmethod
+    def main(cls):
+        View.criarAdmin()
+
+        # MENU DO VISITANTE
+        while (cls.idClienteSessao == -1):
+            op = UI.menuVisitante()
+            if (op == 1):
+                UI.cadastrarVisitante()
+            elif (op == 2):
+                cls.idClienteSessao = UI.validarVisitante()
+                if (cls.idClienteSessao == None):
+                    cls.idClienteSessao = -1
+            else:
+                print("Opção inválida.")
+        
+
+        # MENU DO ADMIN
+        if (cls.idClienteSessao == 0):
+            run = True
+            while(run):
+                match(UI.menuAdmin()):
+                    case 1: UI.inserirCliente()
+                    case 2: UI.listarClientes()
+                    case 3: UI.atualizarCliente()
+                    case 4: UI.deletarCliente()
+                    case 5: UI.inserirCategoria()
+                    case 6: UI.listarCategorias()
+                    case 7: UI.atualizarCategoria()
+                    case 8: UI.deletarCategoria()
+                    case 9: UI.inserirProduto()
+                    case 10: UI.listarProdutos()
+                    case 11: UI.atualizarProduto()
+                    case 12: UI.deletarProduto()
+                    case 13: run = False
+                    case _: print("Opção inválida")
+        
+        # MENU DO CLIENTE
+        else:
+            run = True
+            while(run):
+                match(UI.menuCliente()):
+                    case 1: UI.listarCategorias()
+                    case 2: UI.listarProdutos()
+                    case 3: UI.inserirNoCarrinho()
+                    case 4: UI.verCarrinho()
+                    case 5: UI.atualizarCarrinho()
+                    case 6: UI.removerDoCarrinho()
+                    case _: print("Opção inválida.")
+
+
+ #-----------------VISITANTE-------------------------------------------------------------------------------------------------------------
+
+    @classmethod
+    def cadastrarVisitante(cls):
+        desc = input("Digite seu nome: ")
+        fone = input("Digite seu número de telefone: ")
+        email = input("Digite seu e-mail: ")
+        senha = input("Crie uma senha: ")
+        View.inserirCliente(0, desc, fone, email, senha)
+
+    @classmethod
+    def validarVisitante(cls):
+        email = input("Digite seu e-mail: ")
+        senha = input("Digite sua senha: ")
+        idCliente = View.validarVisitante(email, senha)
+        if (idCliente == False):
+            print("Cadastro não encontrado.")
+            return None
+        else:
+            print(f"Bem-vindo, {View.nomeCliente(idCliente)}!")
+            return idCliente
+
+#-----------------ADMIN-------------------------------------------------------------------------------------------------------------        
+
     @classmethod
     def inserirCliente(cls):
         desc = input("Digite o nome do cliente: ")
@@ -158,10 +234,40 @@ class UI:
         if not (View.validarProdutoId(id)):
             print("Produto não encontrado.")
         else: 
-            View.deletarProduto(id)     
+            View.deletarProduto(id)
 
-        
-        
+#-----------------CLIENTE-------------------------------------------------------------------------------------------------------------
+    
+    @classmethod
+    def inserirNoCarrinho(cls):
+        View.criarCarrinho(cls.idClienteSessao)
+        idProduto = int(input("Digite o ID do produto desejado: "))
+        qtd = int(input("Digite a quantidade do produto desejado: "))
+        if (View.verificarEstoque(idProduto, qtd)):
+            View.inserirNoCarrinho(idProduto, qtd, cls.idClienteSessao)
+
+    @classmethod
+    def verCarrinho(cls):
+        if not (View.verCarrinho(cls.idClienteSessao)):
+            print("Carrinho vazio.")
+
+    @classmethod
+    def atualizarCarrinho(cls):
+        if not (View.verificarCarrinho(cls.idClienteSessao)):
+            print("Carrinho vazio.")
+        else:
+            idProduto = int(input("Digite o ID do produto que deseja atualizar no carrinho: "))
+            qtd = int(input("Digite a nova quantidade desejada do produto: "))
+            if (View.verificarEstoque(idProduto, qtd)):
+                View.atualizarCarrinho(idProduto, qtd, cls.idClienteSessao)
+    
+    @classmethod
+    def removerDoCarrinho(cls):
+        if not (View.verificarCarrinho(cls.idClienteSessao)):
+            print("Carrinho vazio.")
+        else:
+            idProduto = int(input("Digite o ID do produto que deseja remover do carrinho: "))
+            View.removerDoCarrinho(idProduto, cls.idClienteSessao)
 
 
 UI.main()

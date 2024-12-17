@@ -245,6 +245,7 @@ class UI:
         qtd = int(input("Digite a quantidade do produto desejado: "))
         if (View.verificarEstoque(idProduto, qtd)):
             View.inserirNoCarrinho(idProduto, qtd, cls.idClienteSessao)
+        View.salvarCarrinho()
 
     @classmethod
     def verCarrinho(cls):
@@ -260,6 +261,7 @@ class UI:
             qtd = int(input("Digite a nova quantidade desejada do produto: "))
             if (View.verificarEstoque(idProduto, qtd)):
                 View.atualizarCarrinho(idProduto, qtd, cls.idClienteSessao)
+        View.salvarCarrinho()
     
     @classmethod
     def removerDoCarrinho(cls):
@@ -268,6 +270,7 @@ class UI:
         else:
             idProduto = int(input("Digite o ID do produto que deseja remover do carrinho: "))
             View.removerDoCarrinho(idProduto, cls.idClienteSessao)
+        View.salvarCarrinho()
 
 
 UI.main()

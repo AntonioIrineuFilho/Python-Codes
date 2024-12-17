@@ -190,3 +190,7 @@ class View:
                     if (i.getIdProduto() == idProduto):
                         idItem = i.getId()
                 c.deletarItem(idItem)
+    
+    @staticmethod
+    def salvarCarrinho():
+        Vendas.atualizarVendas()

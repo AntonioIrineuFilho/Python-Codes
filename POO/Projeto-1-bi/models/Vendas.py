@@ -1,13 +1,14 @@
 import json
 from models.Clientes import Clientes
+from models.VendaItem import VendaItem
 
 class Venda:
-    def __init__(self, id, data, idCliente):
+    def __init__(self, id, data, idCliente, itens):
         self.setId(id)
         self.setData(data)
         self.setTotal()
         self.setIdCliente(idCliente)
-        self.__itens = []
+        self.__itens = itens
     def setId(self, id):
         if (id < 0):
             raise ValueError("INVALID ID")
@@ -52,7 +53,7 @@ class Venda:
     def atualizarItem(self, item):
         for obj in self.itens:
             if (obj.getId() == item.getId()):
-                obj.setQuantidade(item.setQuantidade())
+                obj.setQuantidade(item.getQuantidade())
                 return
         print("O item desejado não se encontra no carrinho.")
     def deletarItem(self, id):
@@ -106,8 +107,6 @@ class Vendas:
                 return
         print("Carrinho não encontrado.")
 
-
-
     @classmethod
     def abrir(cls):
         cls.vendas = []
@@ -115,7 +114,14 @@ class Vendas:
             with open("vendas.json", mode = "r") as arquivo:
                 vendas = json.load(arquivo)
             for obj in vendas:
-                venda = Venda(obj["_Venda__id"], obj["_Venda__data"], obj["_Venda__total"], obj["_Venda__idCliente"], obj["_Venda__itens"])
+                itens = [VendaItem(
+                    i["_VendaItem__id"], 
+                    i["_VendaItem__qtd"], 
+                    i["_VendaItem__preco"], 
+                    i["_VendaItem__idVenda"], 
+                    i["_VendaItem__idProduto"]
+                ) for i in obj["_Venda__itens"]]
+                venda = Venda(obj["_Venda__id"], obj["_Venda__data"], obj["_Venda__idCliente"], itens)
                 cls.vendas.append(venda)
         except FileNotFoundError:
             pass

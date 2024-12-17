@@ -30,7 +30,7 @@ class UI:
         print(20*"-")
         print("MENU DO CLIENTE")
         print(20*"-")
-        print("1-Ver Categorias\n2-Ver Produtos\n3-Inserir Produto no Carrinho\n4-Ver Carrinho\n5-Atualizar Produto\n6-Remover Produto\n")
+        print("1-Ver Categorias\n2-Ver Produtos\n3-Inserir Produto no Carrinho\n4-Ver Carrinho\n5-Atualizar Produto do Carrinho\n6-Remover Produto do Carrinho\n7-Finalizar Compra\n8-Sair")
         op = int(input("Digite a opção desejada: "))
         return op
 
@@ -82,6 +82,8 @@ class UI:
                     case 4: UI.verCarrinho()
                     case 5: UI.atualizarCarrinho()
                     case 6: UI.removerDoCarrinho()
+                    case 7: UI.finalizarCompra()
+                    case 8: run = False
                     case _: print("Opção inválida.")
 
 
@@ -245,7 +247,7 @@ class UI:
         qtd = int(input("Digite a quantidade do produto desejado: "))
         if (View.verificarEstoque(idProduto, qtd)):
             View.inserirNoCarrinho(idProduto, qtd, cls.idClienteSessao)
-        View.salvarCarrinho()
+            View.salvarCarrinho()
 
     @classmethod
     def verCarrinho(cls):
@@ -261,7 +263,7 @@ class UI:
             qtd = int(input("Digite a nova quantidade desejada do produto: "))
             if (View.verificarEstoque(idProduto, qtd)):
                 View.atualizarCarrinho(idProduto, qtd, cls.idClienteSessao)
-        View.salvarCarrinho()
+                View.salvarCarrinho()
     
     @classmethod
     def removerDoCarrinho(cls):
@@ -270,7 +272,16 @@ class UI:
         else:
             idProduto = int(input("Digite o ID do produto que deseja remover do carrinho: "))
             View.removerDoCarrinho(idProduto, cls.idClienteSessao)
-        View.salvarCarrinho()
+            View.salvarCarrinho()
+
+    @classmethod
+    def finalizarCompra(cls):
+        if not (View.verCarrinho(cls.idClienteSessao)):
+            print("Carrinho vazio.")
+        else:
+           op = int(input("Digite 1 para confirmar a finalização do pedido ou qualquer número para continuar comprando: "))
+           if (op == 1):
+               View.finalizarCompra(cls.idClienteSessao)
 
 
 UI.main()

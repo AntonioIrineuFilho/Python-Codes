@@ -114,7 +114,7 @@ class View:
 
     @staticmethod
     def criarCarrinho(idClienteSessao):
-        v = Venda(0, date.today(), idClienteSessao)
+        v = Venda(0, date.today(), idClienteSessao, [])
         Vendas.inserirVenda(v)
     
     @staticmethod
@@ -192,5 +192,27 @@ class View:
                 c.deletarItem(idItem)
     
     @staticmethod
-    def salvarCarrinho():
-        Vendas.atualizarVendas()
+    def salvarCarrinho(idClienteSessao):
+        carrinhos = Vendas.listarVendas()
+        for c in carrinhos:
+            if (c.getIdCliente() == idClienteSessao):
+                carrinhoAtualizado = Venda(c.getId(), date.today(), idClienteSessao, c.getItens())
+                Vendas.atualizarVendas(carrinhoAtualizado)
+    
+    @staticmethod
+    def finalizarCompra(idClienteSessao):
+        carrinhos = Vendas.listarVendas()
+        produtos = Produtos.listarProdutos()
+        for c in carrinhos:
+            if (c.getIdCliente() == idClienteSessao):
+                itens = c.getItens()
+                for i in itens:
+                    idProduto = i.getIdProduto()
+                    qtdCompra = i.getQuantidade()
+                    for p in produtos:
+                        if (p.getId() == idProduto):
+                            p.setEstoque(p.getEstoque-qtdCompra)
+                            break
+                Vendas.deletarVendas(c.getId())
+                break
+                

@@ -8,7 +8,7 @@ class Venda:
         self.setData(data)
         self.setTotal()
         self.setIdCliente(idCliente)
-        self.__itens = itens
+        self.setItens(itens)
     def setId(self, id):
         if (id < 0):
             raise ValueError("INVALID ID")
@@ -29,6 +29,8 @@ class Venda:
                 break
             if (i == len(clientes)-1):
                 raise ValueError("INVALID ID")
+    def setItens(self, itens):
+        self.__itens = itens
     def getItens(self):
         return self.__itens
     def getId(self):
@@ -47,17 +49,17 @@ class Venda:
             if (obj.getId() >= id):
                 id = obj.getId()
         item.setId(id+1)
-        self.itens.append(item)
+        self.__itens.append(item)
     def listarItens(self):
         return self.__itens
     def atualizarItem(self, item):
-        for obj in self.itens:
+        for obj in self.__itens:
             if (obj.getId() == item.getId()):
                 obj.setQuantidade(item.getQuantidade())
                 return
         print("O item desejado não se encontra no carrinho.")
     def deletarItem(self, id):
-        for obj in self.itens:
+        for obj in self.__itens:
             if (obj.getId() == id):
                 del(obj)
                 return

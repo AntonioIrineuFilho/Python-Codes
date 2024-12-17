@@ -49,7 +49,7 @@ class View:
         for c in clientes:
             if (c.getEmail() == email and c.getSenha() == senha):
                 return c.getId()
-        return False
+        return -1
 
     @staticmethod
     def nomeVisitante(id):

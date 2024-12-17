@@ -64,6 +64,13 @@ class Venda:
                 del(obj)
                 return
         print("O item desejado não se encontra no carrinho.")
+    def converterEmDict(self):
+        return {
+            "id": self.getId(),
+            "data": self.getData(),
+            "idCliente": self.getIdCliente(),
+            "itens": [item.converterEmDict() for item in self.getItens()]
+        }
 
     
 
@@ -117,13 +124,13 @@ class Vendas:
                 vendas = json.load(arquivo)
             for obj in vendas:
                 itens = [VendaItem(
-                    i["_VendaItem__id"], 
-                    i["_VendaItem__qtd"], 
-                    i["_VendaItem__preco"], 
-                    i["_VendaItem__idVenda"], 
-                    i["_VendaItem__idProduto"]
-                ) for i in obj["_Venda__itens"]]
-                venda = Venda(obj["_Venda__id"], obj["_Venda__data"], obj["_Venda__idCliente"], itens)
+                    i["id"], 
+                    i["qtd"], 
+                    i["preco"], 
+                    i["idVenda"], 
+                    i["idProduto"]
+                ) for i in obj["itens"]]
+                venda = Venda(obj["id"], obj["data"], obj["idCliente"], itens)
                 cls.vendas.append(venda)
         except FileNotFoundError:
             pass
@@ -132,5 +139,5 @@ class Vendas:
         
     @classmethod
     def salvar(cls):
-        with open("vendas.json", mode= "w") as arquivo:
-            json.dump(cls.vendas, arquivo, default=vars)
+        with open("json/vendas.json", mode= "w") as arquivo:
+            json.dump([venda.converterEmDict() for venda in cls.vendas], arquivo, default=vars)

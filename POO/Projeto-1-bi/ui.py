@@ -45,8 +45,6 @@ class UI:
                 UI.cadastrarVisitante()
             elif (op == 2):
                 cls.idClienteSessao = UI.validarVisitante()
-                if (cls.idClienteSessao == None):
-                    cls.idClienteSessao = -1
             else:
                 print("Opção inválida.")
         
@@ -102,11 +100,11 @@ class UI:
         email = input("Digite seu e-mail: ")
         senha = input("Digite sua senha: ")
         idCliente = View.validarVisitante(email, senha)
-        if (idCliente == False):
-            print("Cadastro não encontrado.")
-            return None
+        if (idCliente < 0):
+            print("Cliente não encontrado.")
+            return idCliente
         else:
-            print(f"Bem-vindo, {View.nomeCliente(idCliente)}!")
+            print(f"Bem-vindo, {View.nomeVisitante(idCliente)}!")
             return idCliente
 
 #-----------------ADMIN-------------------------------------------------------------------------------------------------------------        

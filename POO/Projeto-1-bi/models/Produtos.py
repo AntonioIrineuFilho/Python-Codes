@@ -47,7 +47,7 @@ class Produto:
     def getIdCategoria(self):
         return self.__idCategoria
     def __str__(self):
-        return f'{self.getId()} - {self.getDescricao()} - R$ {self.getPreco():.2f} - {self.getEstoque()} - {self.getIdCategoria()}(Categoria)'
+        return f'{self.getId()} - {self.getDescricao()} - R$ {self.getPreco():.2f} - {self.getEstoque()}(Estoque) - {self.getIdCategoria()}(Categoria)'
     
 class Produtos:
     produtos = []

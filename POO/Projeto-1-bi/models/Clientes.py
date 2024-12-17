@@ -51,11 +51,12 @@ class Clientes:
     @classmethod
     def inserirCliente(cls, cliente):
         cls.abrir()
-        id = 0
-        for obj in cls.clientes:
-            if (obj.getId() >= id):
-                id = obj.getId()
-        cliente.setId(id+1)
+        if not (cliente.getEmail() == "admin" and cliente.getSenha() == "admin"):
+            id = 0
+            for obj in cls.clientes:
+                if (obj.getId() >= id):
+                    id = obj.getId()
+            cliente.setId(id+1)
         cls.clientes.append(cliente)
         cls.salvar()
     

@@ -1,8 +1,8 @@
 from models.Clientes import Cliente, Clientes
 from models.Categorias import Categoria, Categorias
 from models.Produtos import Produto, Produtos
-from models.VendaItem import VendaItem
-from models.Vendas import Venda, Vendas
+from models.VendasItens import VendaItem, VendasItens
+from models.Venda import Venda
 from datetime import date
 
 class View:
@@ -113,17 +113,8 @@ class View:
         Produtos.deletarProduto(id)
 
     @staticmethod
-    def criarCarrinho(idClienteSessao):
-        v = Venda(0, date.today(), idClienteSessao, [])
-        Vendas.inserirVenda(v)
-    
-    @staticmethod
-    def verificarCarrinho(idClienteSessao):
-        carrinhos = Vendas.listarVendas()
-        for c in carrinhos:
-            if (c.getIdCliente() == idClienteSessao):
-                return True
-        return False
+    def NotaFiscal(idClienteSessao):
+        return Venda(1, date.today(), idClienteSessao)
 
     @staticmethod
     def verificarEstoque(id, qtd):
@@ -131,88 +122,76 @@ class View:
         for obj in p:
             if (obj.getId() == id):
                 if (obj.getEstoque() >= qtd):
-                    return True
+                    return "ok"
                 else:
-                    print("Estoque insuficiente.")
-                    return False
-        print("ID do produto inválido.")
-        return False
-
+                    return "Estoque insuficiente."
+        return "O produto do ID digitado não consta no carrinho."
     
     @staticmethod
-    def inserirNoCarrinho(idProduto, qtd, idClienteSessao):
-        carrinhos = Vendas.listarVendas()
+    def inserirNoCarrinho(idProduto, qtd):
         produtos = Produtos.listarProdutos()
-        for c in carrinhos:
-            if (c.getIdCliente() == idClienteSessao):
-                for p in produtos:
-                    if (p.getId() == idProduto):
-                        preco = p.getPreco()
-                        break
-                v = VendaItem(0, qtd, preco, c.getId(), idProduto)
-                c.inserirItem(v)
+        for p in produtos:
+            if (p.getId() == idProduto):
+                preco = p.getPreco()
+                break
+        v = VendaItem(0, qtd, preco, 1, idProduto)
+        VendasItens.inserirItem(v)
     
     @staticmethod
     def verCarrinho(idClienteSessao):
-        carrinhos = Vendas.listarVendas()
-        for c in carrinhos:
-            if (c.getIdCliente() == idClienteSessao):
-                print(c)
-                return
-        return False
+        venda = View.NotaFiscal(idClienteSessao)
+        if not (venda.getCarrinho()):
+            return None
+        else:
+            return VendasItens.listarItens()
     
     @staticmethod
     def atualizarCarrinho(idProduto, qtd, idClienteSessao):
-        carrinhos = Vendas.listarVendas()
-        produtos = Produtos.listarProdutos()
-        for c in carrinhos:
-            if (c.getIdCliente() == idClienteSessao):
-                itens = c.getItens()
-                for i in itens:
-                    if (i.getIdProduto() == idProduto):
-                        idItem = i.getId()
-                for p in produtos:
-                    if (p.getId() == idProduto):
-                        preco = p.getPreco()
-                        break
-                v = VendaItem(idItem, qtd, preco, c.getId(), idProduto)
-                c.atualizarItem(v)
-                return True
-            
+        venda = View.NotaFiscal(idClienteSessao)
+        if not (venda.getCarrinho()):
+            return None
+        else:
+            carrinho = VendasItens.listarItens()
+            for i in carrinho:
+                if (i.getIdProduto() == idProduto):
+                    idItem = i.getId()
+                    preco = i.getPreco()
+                    break
+            v = VendaItem(idItem, qtd, preco, 1, idProduto)
+            VendasItens.atualizarItem(v)
+            return True
 
     @staticmethod
     def removerDoCarrinho(idProduto, idClienteSessao):
-        carrinhos = Vendas.listarVendas()
-        for c in carrinhos:
-            if (c.getIdCliente() == idClienteSessao):
-                itens = c.getItens()
-                for i in itens:
-                    if (i.getIdProduto() == idProduto):
-                        idItem = i.getId()
-                c.deletarItem(idItem)
+        venda = View.NotaFiscal(idClienteSessao)
+        if not (venda.getCarrinho()):
+            return None
+        else:
+            carrinho = VendasItens.listarItens()
+            for i in carrinho:
+                if (i.getIdProduto() == idProduto):
+                    VendasItens.deletarItem(i.getId())
+                    return True
+            return False
     
     @staticmethod
-    def salvarCarrinho(idClienteSessao):
-        carrinhos = Vendas.listarVendas()
-        for c in carrinhos:
-            if (c.getIdCliente() == idClienteSessao):
-                carrinhoAtualizado = Venda(c.getId(), date.today(), idClienteSessao, c.getItens())
-                Vendas.atualizarVendas(carrinhoAtualizado)
-    
+    def verificarCarrinho(idClienteSessao):
+        venda = View.NotaFiscal(idClienteSessao)
+        return venda.getCarrinho()
+        
     @staticmethod
     def finalizarCompra(idClienteSessao):
-        carrinhos = Vendas.listarVendas()
+        venda = View.NotaFiscal(idClienteSessao)
+        carrinho = VendasItens.listarItens()
         produtos = Produtos.listarProdutos()
-        for c in carrinhos:
-            if (c.getIdCliente() == idClienteSessao):
-                itens = c.getItens()
-                for i in itens:
-                    idProduto = i.getIdProduto()
-                    qtdCompra = i.getQuantidade()
-                    for p in produtos:
-                        if (p.getId() == idProduto):
-                            p.setEstoque(p.getEstoque-qtdCompra)
-                            break
-                Vendas.deletarVendas(c.getId())
-                break
+        for item in carrinho:
+            idProduto = item.getIdProduto()
+            qtdCompra = item.getQuantidade()
+            for p in produtos:
+                if (p.getId() == idProduto):
+                    estoqueAtualizado = p.getEstoque()-qtdCompra
+                    produto = Produto(p.getId(), p.getDescricao(), p.getPreco(), estoqueAtualizado, p.getIdCategoria())
+                    Produtos.atualizarProduto(produto)
+                    break
+        return venda
                 

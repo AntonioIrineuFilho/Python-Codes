@@ -1,3 +1,4 @@
+import json
 from models.Produtos import Produtos
 
 class VendaItem:
@@ -28,10 +29,11 @@ class VendaItem:
             else:
                 self.__idVenda = idVenda
     def setIdProduto(self, idProduto):
-        produtos = Produtos.produtos
+        produtos = Produtos.listarProdutos()
         for i in range(len(produtos)):
             if (produtos[i].getId() == idProduto):
                 self.__idProduto = idProduto
+                break
             if (i == len(produtos)-1):
                 raise ValueError("INVALID ID")
     def getId(self):
@@ -45,12 +47,41 @@ class VendaItem:
     def getIdProduto(self):
         return self.__idProduto
     def __str__(self):
-        return f'Id: {self.getId()} Quantidade: {self.getQuantidade()} Preço Unitário: R$ {self.getPreco():.2f} Id Carrinho: {self.getIdVenda()} Id Produto: {self.getIdProduto()}'
-    def converterEmDict(self):
-        return {
-            "id": self.getId(),
-            "qtd": self.getQuantidade(),
-            "preco": self.getPreco(),
-            "idVenda": self.getIdVenda(),
-            "idProduto": self.getIdProduto()
-        }
+        return f'Id do Pedido: {self.getId()} Quantidade: {self.getQuantidade()} Preço Unitário: R$ {self.getPreco():.2f} Id Produto: {self.getIdProduto()}'
+    
+class VendasItens:
+    itens = []
+
+    @classmethod
+    def inserirItem(cls, item):
+        id = 0
+        for i in cls.itens:
+            if (i.getIdProduto() == item.getIdProduto()):
+                print("O produto do ID digitado já foi inserido no carrinho.")
+                return
+            if (i.getId() >= id):
+                id = i.getId()
+        item.setId(id+1)
+        cls.itens.append(item)
+    
+    @classmethod
+    def listarItens(cls):
+        return cls.itens
+    
+    @classmethod
+    def atualizarItem(cls, item):
+        for i in cls.itens:
+            if (i.getId() == item.getId()):
+                i.setQuantidade(item.getQuantidade())
+                return
+        print("O produto do ID digitado não consta no carrinho.")
+
+    @classmethod
+    def deletarItem(cls, id):
+        for i in cls.itens:
+            if (i.getId() == id):
+                cls.itens.remove(i)
+                return
+        print("O produto do ID digitado não consta no carrinho.")
+
+            

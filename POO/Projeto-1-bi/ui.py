@@ -240,46 +240,49 @@ class UI:
     
     @classmethod
     def inserirNoCarrinho(cls):
-        View.criarCarrinho(cls.idClienteSessao)
         idProduto = int(input("Digite o ID do produto desejado: "))
         qtd = int(input("Digite a quantidade do produto desejado: "))
-        if (View.verificarEstoque(idProduto, qtd)):
-            View.inserirNoCarrinho(idProduto, qtd, cls.idClienteSessao)
-            View.salvarCarrinho()
+        vEst = View.verificarEstoque(idProduto, qtd)
+        if (vEst == "ok"):
+            View.inserirNoCarrinho(idProduto, qtd)
+        else:
+            print(vEst)
 
     @classmethod
     def verCarrinho(cls):
-        if not (View.verCarrinho(cls.idClienteSessao)):
+        carrinho = View.verCarrinho(cls.idClienteSessao)
+        if (carrinho == None):
             print("Carrinho vazio.")
+        else:
+            for item in carrinho:
+                print(item)
 
     @classmethod
     def atualizarCarrinho(cls):
-        if not (View.verificarCarrinho(cls.idClienteSessao)):
-            print("Carrinho vazio.")
-        else:
-            idProduto = int(input("Digite o ID do produto que deseja atualizar no carrinho: "))
-            qtd = int(input("Digite a nova quantidade desejada do produto: "))
-            if (View.verificarEstoque(idProduto, qtd)):
-                View.atualizarCarrinho(idProduto, qtd, cls.idClienteSessao)
-                View.salvarCarrinho()
+        idProduto = int(input("Digite o ID do produto que deseja atualizar no carrinho: "))
+        qtd = int(input("Digite a nova quantidade desejada do produto: "))
+        if (View.verificarEstoque(idProduto, qtd)):
+                if (View.atualizarCarrinho(idProduto, qtd, cls.idClienteSessao) == None):
+                    print("Carrinho vazio.")
     
     @classmethod
     def removerDoCarrinho(cls):
-        if not (View.verificarCarrinho(cls.idClienteSessao)):
+        idProduto = int(input("Digite o ID do produto que deseja remover do carrinho: "))
+        rdc = View.removerDoCarrinho(idProduto, cls.idClienteSessao)
+        if (rdc == None):
             print("Carrinho vazio.")
-        else:
-            idProduto = int(input("Digite o ID do produto que deseja remover do carrinho: "))
-            View.removerDoCarrinho(idProduto, cls.idClienteSessao)
-            View.salvarCarrinho()
+        elif (rdc == False):
+            print("O produto do ID digitado não consta no carrinho.")
+        
 
     @classmethod
     def finalizarCompra(cls):
-        if not (View.verCarrinho(cls.idClienteSessao)):
+        if not (View.verificarCarrinho(cls.idClienteSessao)):
             print("Carrinho vazio.")
         else:
            op = int(input("Digite 1 para confirmar a finalização do pedido ou qualquer número para continuar comprando: "))
            if (op == 1):
-               View.finalizarCompra(cls.idClienteSessao)
+            print(View.finalizarCompra(cls.idClienteSessao))
 
 
 UI.main()

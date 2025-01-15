@@ -1,0 +1,11 @@
+O EXCEPT DESTROI O ERRO, OU SEJA, O PORGRAMA SEGUE NORMAL APÓS O EXCEPT
+
+ValueError -> Quando o valor não é permitido
+
+FileExistsError -> Quando se tenta criar um arquivo com um nome que já existe(função open)
+
+FileNotFoundError -> Quando tenta-se abrir um arquivo que não existe(função open)
+
+IndexError -> Quando o indice de uma lista não é válido(listas)
+
+KeyError -> Quando uma chave de um dicionário não é válido(dicionários)

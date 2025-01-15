@@ -1,4 +1,3 @@
-import json
 from models.Clientes import Clientes
 from models.VendasItens import VendasItens
 
@@ -45,4 +44,4 @@ class Venda:
     def getIdCliente(self):
         return self.__idCliente
     def __str__(self):
-        return f'Nota Fiscal\n\n{self.getId()} - Data da Compra: {self.getData()} - Id do Cliente: {self.getIdCliente()} - Valor Total: R$ {self.getTotal():.2f}'
+        return f'\n\033[1;33mNOTA FISCAL\n{self.getId()} - Data da Compra: {self.getData()} - Id do Cliente: {self.getIdCliente()} - Valor Total: R$ {self.getTotal():.2f}\033[m'

@@ -124,8 +124,13 @@ class View:
                 if (obj.getEstoque() >= qtd):
                     return "ok"
                 else:
-                    return "Estoque insuficiente."
-        return "O produto do ID digitado não consta no carrinho."
+                    return "\n\033[1;31mEstoque insuficiente.\033[m"
+        return "\n\033[1;31mO produto do ID digitado não consta no carrinho.\033[m"
+    
+    @staticmethod
+    def verificarCarrinho(idClienteSessao):
+        venda = View.NotaFiscal(idClienteSessao)
+        return venda.getCarrinho()
     
     @staticmethod
     def inserirNoCarrinho(idProduto, qtd):
@@ -146,38 +151,25 @@ class View:
             return VendasItens.listarItens()
     
     @staticmethod
-    def atualizarCarrinho(idProduto, qtd, idClienteSessao):
-        venda = View.NotaFiscal(idClienteSessao)
-        if not (venda.getCarrinho()):
-            return None
-        else:
-            carrinho = VendasItens.listarItens()
-            for i in carrinho:
-                if (i.getIdProduto() == idProduto):
-                    idItem = i.getId()
-                    preco = i.getPreco()
-                    break
-            v = VendaItem(idItem, qtd, preco, 1, idProduto)
-            VendasItens.atualizarItem(v)
-            return True
+    def atualizarCarrinho(idProduto, qtd):
+        carrinho = VendasItens.listarItens()
+        for i in carrinho:
+            if (i.getIdProduto() == idProduto):
+                idItem = i.getId()
+                preco = i.getPreco()
+                break
+        v = VendaItem(idItem, qtd, preco, 1, idProduto)
+        VendasItens.atualizarItem(v)
+        return True
 
     @staticmethod
-    def removerDoCarrinho(idProduto, idClienteSessao):
-        venda = View.NotaFiscal(idClienteSessao)
-        if not (venda.getCarrinho()):
-            return None
-        else:
-            carrinho = VendasItens.listarItens()
-            for i in carrinho:
-                if (i.getIdProduto() == idProduto):
-                    VendasItens.deletarItem(i.getId())
-                    return True
-            return False
-    
-    @staticmethod
-    def verificarCarrinho(idClienteSessao):
-        venda = View.NotaFiscal(idClienteSessao)
-        return venda.getCarrinho()
+    def removerDoCarrinho(idProduto):
+        carrinho = VendasItens.listarItens()
+        for i in carrinho:
+            if (i.getIdProduto() == idProduto):
+                VendasItens.deletarItem(i.getId())
+                return True
+        return False
         
     @staticmethod
     def finalizarCompra(idClienteSessao):

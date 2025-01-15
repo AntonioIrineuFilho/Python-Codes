@@ -1,4 +1,3 @@
-import json
 from models.Produtos import Produtos
 
 class VendaItem:
@@ -74,7 +73,6 @@ class VendasItens:
             if (i.getId() == item.getId()):
                 i.setQuantidade(item.getQuantidade())
                 return
-        print("O produto do ID digitado não consta no carrinho.")
 
     @classmethod
     def deletarItem(cls, id):
@@ -82,6 +80,5 @@ class VendasItens:
             if (i.getId() == id):
                 cls.itens.remove(i)
                 return
-        print("O produto do ID digitado não consta no carrinho.")
 
             
